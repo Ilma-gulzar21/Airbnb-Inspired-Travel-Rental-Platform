@@ -1,0 +1,896 @@
+<% layout("/layouts/boilerplate") %>
+<link rel="stylesheet" href="/css/show.css">
+
+<div class="row mt-3">
+
+  <!-- Listing title -->
+  <div class="col-8 offset-2">
+    <h3 class="listing-title">
+      <%= listing.title %>
+    </h3>
+  </div>
+
+  <!-- Listing card -->
+  <div class="card col-8 offset-2 show-card listing-card">
+
+    <!-- Listing image -->
+    <img
+      src="<%= listing.image.url %>"
+      class="card-img-top show-img"
+      alt="listing_image"
+    >
+
+    <!-- Listing details -->
+    <div class="card-body">
+
+      <p class="card-text">
+        <i><b>Owner: </b>@<%= listing.owner.username %></i>
+      </p>
+
+      <hr>
+
+      <p class="card-text">
+        <strong>Description:</strong>
+        <%= listing.description %>
+      </p>
+
+      <p class="card-text">
+        <strong>Price:</strong>
+        &#8377; <%= listing.price.toLocaleString("en-IN") %> / night
+      </p>
+
+      <p class="card-text">
+        <strong>Location:</strong>
+        <%= listing.location %>
+      </p>
+
+      <p class="card-text">
+        <strong>Country:</strong>
+        <%= listing.country %>
+      </p>
+
+    </div>
+  </div>
+
+  <!-- Edit delete section -->
+  <% if (currentUser && listing.owner && listing.owner.equals(currentUser._id)) { %>
+
+    <div class="col-8 offset-2">
+
+      <div class="listing-actions">
+
+        <div class="listing-actions-left">
+
+          <!-- Edit -->
+          <a
+            href="/listings/<%= listing._id %>/edit"
+            class="btn btn-dark listing-action-btn"
+          >
+            <i class="fa-solid fa-pen-to-square"></i>
+            Edit Listing
+          </a>
+
+          <!-- Delete -->
+          <form
+            method="POST"
+            action="/listings/<%= listing._id %>?_method=DELETE"
+            onsubmit="return confirm('Are you sure you want to delete this listing?');"
+          >
+            <button
+              type="submit"
+              class="btn btn-outline-danger listing-action-btn"
+            >
+              <i class="fa-solid fa-trash"></i>
+              Delete Listing
+            </button>
+          </form>
+
+        </div>
+      </div>
+    </div>
+
+  <% } %>
+
+  <!-- Main content -->
+  <div class="col-8 offset-2 mb-3">
+
+    <!-- Quick info -->
+    <div class="quick-info">
+
+      <!-- Comfortable -->
+      <div class="info-item">
+
+        <div class="info-icon">
+          <i class="fa-solid fa-house"></i>
+        </div>
+
+        <div>
+          <h6>Comfortable Stay</h6>
+          <p>Perfect place for your trip</p>
+        </div>
+
+      </div>
+
+      <!-- Location -->
+      <div class="info-item">
+
+        <div class="info-icon">
+          <i class="fa-solid fa-location-dot"></i>
+        </div>
+
+        <div>
+          <h6>Great Location</h6>
+          <p><%= listing.location %></p>
+        </div>
+
+      </div>
+
+      <!-- Trusted -->
+      <div class="info-item">
+
+        <div class="info-icon">
+          <i class="fa-solid fa-shield-heart"></i>
+        </div>
+
+        <div>
+          <h6>Trusted Listing</h6>
+          <p>Enjoy a comfortable experience</p>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- Share -->
+    <div class="share-section mt-4">
+
+      <button
+        type="button"
+        class="share-btn"
+        onclick="shareListing()"
+      >
+        <i class="fa-solid fa-share-nodes"></i>
+        Share this listing
+      </button>
+
+      <span id="share-message"></span>
+    </div>
+
+    <!-- Review section -->
+    <div class="review-section">
+
+      <% if(currUser) { %>
+
+        <h4 class="mb-4">
+          Leave a Review
+        </h4>
+
+        <!-- Review form -->
+        <form
+          action="/listings/<%= listing._id %>/reviews"
+          method="POST"
+          novalidate
+          class="needs-validation review-form"
+        >
+
+          <!-- Star rating -->
+          <div class="mb-4">
+
+            <label class="form-label fw-semibold">
+              Rating
+            </label>
+
+            <div class="star-rating">
+
+              <input
+                type="radio"
+                name="review[rating]"
+                id="star5"
+                value="5"
+                required
+              >
+
+              <label for="star5">★</label>
+
+              <input
+                type="radio"
+                name="review[rating]"
+                id="star4"
+                value="4"
+              >
+
+              <label for="star4">★</label>
+
+              <input
+                type="radio"
+                name="review[rating]"
+                id="star3"
+                value="3"
+              >
+
+              <label for="star3">★</label>
+
+              <input
+                type="radio"
+                name="review[rating]"
+                id="star2"
+                value="2"
+              >
+
+              <label for="star2">★</label>
+
+              <input
+                type="radio"
+                name="review[rating]"
+                id="star1"
+                value="1"
+              >
+
+              <label for="star1">★</label>
+
+            </div>
+
+            <div class="invalid-feedback">
+              Please select a rating.
+            </div>
+
+          </div>
+
+          <!-- Comment -->
+          <div class="mb-4">
+
+            <label
+              for="comment"
+              class="form-label fw-semibold"
+            >
+              Comments
+            </label>
+
+            <textarea
+              name="review[comment]"
+              id="comment"
+              rows="5"
+              class="form-control"
+              placeholder="Share your experience..."
+              required
+            ></textarea>
+
+            <div class="invalid-feedback">
+              Please add some comments for review.
+            </div>
+
+          </div>
+
+          <!-- Submit -->
+          <button
+            type="submit"
+            class="btn btn-dark px-4"
+          >
+            <i class="fa-solid fa-paper-plane"></i>
+            Submit Review
+          </button>
+
+        </form>
+
+      <% } %>
+
+      <!-- All reviews -->
+      <hr class="my-5">
+
+      <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <h4 class="mb-0">
+          All Reviews
+        </h4>
+
+        <span class="text-muted">
+          <%= listing.reviews.length %>
+          <%= listing.reviews.length === 1 ? "Review" : "Reviews" %>
+        </span>
+
+      </div>
+
+      <!-- No reviews -->
+      <% if (listing.reviews.length === 0) { %>
+
+        <div class="alert alert-light border rounded-3">
+
+          <i class="fa-regular fa-comment"></i>
+
+          No reviews yet.
+          Be the first to review this listing!
+
+        </div>
+
+      <% } %>
+
+      <!-- Review cards -->
+      <div class="row">
+
+        <% for (let review of listing.reviews) { %>
+
+          <div class="col-md-6 mb-4">
+
+            <div class="card review-card h-100">
+
+              <div class="card-body">
+
+                <!-- Review header -->
+                <div class="d-flex justify-content-between align-items-start">
+
+                  <div>
+
+                    <h5 class="card-title mb-1">
+                      <i class="fa-solid fa-user"></i>
+                      <%= review.owner.username %>
+                    </h5>
+
+                    <!-- Stars -->
+                    <div class="review-stars">
+
+                      <% for (let i = 1; i <= 5; i++) { %>
+
+                        <% if (i <= review.rating) { %>
+
+                          <span class="star-filled">★</span>
+
+                        <% } else { %>
+
+                          <span class="star-empty">★</span>
+
+                        <% } %>
+
+                      <% } %>
+
+                    </div>
+
+                  </div>
+
+                  <!-- Rating badge -->
+                  <span class="rating-badge">
+                    <%= review.rating %>/5
+                  </span>
+
+                </div>
+
+                <!-- Comment -->
+                <p class="card-text mt-3 mb-3">
+                  <%= review.comment %>
+                </p>
+
+                <!-- Delete review -->
+                <% if (
+                  currUser &&
+                  review.owner &&
+                  review.owner._id.toString() === currUser._id.toString()
+                ) { %>
+
+                  <form
+                    method="POST"
+                    action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE"
+                    class="review-delete-form"
+                    onsubmit="return confirm('Are you sure you want to delete this review?');"
+                  >
+
+                    <button
+                      type="submit"
+                      class="review-delete-btn"
+                      title="Delete review"
+                    >
+                      <i class="fa-solid fa-trash"></i>
+                      Delete
+                    </button>
+
+                  </form>
+
+                <% } %>
+
+              </div>
+            </div>
+          </div>
+
+        <% } %>
+
+      </div>
+    </div>
+
+    <!-- Map section -->
+    <div class="map-section mt-5">
+
+      <!-- Map header -->
+      <div class="map-header">
+
+        <div>
+
+          <h4>
+            Explore the Location
+          </h4>
+
+          <p>
+            <i class="fa-solid fa-location-dot"></i>
+            <%= listing.location %>,
+            <%= listing.country %>
+          </p>
+
+        </div>
+
+        <div class="map-location-badge">
+
+          <i class="fa-solid fa-map-location-dot"></i>
+          Location
+
+        </div>
+
+      </div>
+
+      <!-- Live location -->
+      <div class="live-location-box">
+
+        <button
+          type="button"
+          id="locate-btn"
+          class="live-location-btn"
+        >
+          <i class="fa-solid fa-location-crosshairs"></i>
+          Show My Location
+        </button>
+
+        <span id="location-status">
+          Click to detect your current location
+        </span>
+
+      </div>
+
+      <!-- Map -->
+      <div class="map-container">
+
+        <div id="map"></div>
+
+        <div class="map-label">
+
+          <i class="fa-solid fa-location-dot"></i>
+
+          <span>
+            Listing location
+          </span>
+
+        </div>
+
+      </div>
+
+      <!-- Map footer -->
+      <div class="map-footer">
+
+        <div class="map-footer-item">
+
+          <i class="fa-solid fa-house"></i>
+
+          <div>
+
+            <strong>
+              <%= listing.location %>
+            </strong>
+
+            <span>
+              Property location
+            </span>
+
+          </div>
+
+        </div>
+
+        <div class="map-footer-item">
+
+          <i class="fa-solid fa-location-crosshairs"></i>
+
+          <div>
+
+            <strong>
+              Your Location
+            </strong>
+
+            <span id="footer-location">
+              Not detected yet
+            </span>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<!-- Leaflet CSS -->
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+/>
+
+<!-- Leaflet JS -->
+<script
+  src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+></script>
+
+<!-- Map script -->
+<script>
+
+console.log("WanderLust Map Starting...");
+
+// Listing coordinates from database
+const listingGeometry = <%- JSON.stringify(listing.geometry || null) %>;
+
+let listingLatitude = 20.5937;
+let listingLongitude = 78.9629;
+
+// Check saved coordinates
+if (
+  listingGeometry &&
+  listingGeometry.coordinates &&
+  listingGeometry.coordinates.length >= 2
+) {
+  listingLongitude =
+    Number(listingGeometry.coordinates[0]);
+
+  listingLatitude =
+    Number(listingGeometry.coordinates[1]);
+}
+
+console.log(
+  "Listing Latitude:",
+  listingLatitude
+);
+
+console.log(
+  "Listing Longitude:",
+  listingLongitude
+);
+
+// Map
+const map = L.map("map", {
+  zoomControl: false
+}).setView(
+  [
+    listingLatitude,
+    listingLongitude
+  ],
+  listingGeometry ? 15 : 5
+);
+
+// Open Street Map
+L.tileLayer(
+  "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+  {
+    maxZoom: 19,
+    attribution:
+      "&copy; OpenStreetMap contributors"
+  }
+).addTo(map);
+
+// Zoom control
+L.control.zoom({
+  position: "bottomright"
+}).addTo(map);
+
+// Custom listing icon
+const customIcon = L.divIcon({
+  className: "custom-map-marker",
+  html: `
+    <div class="marker-pin">
+      <i class="fa-solid fa-house"></i>
+    </div>
+  `,
+  iconSize: [45, 45],
+  iconAnchor: [22, 45],
+  popupAnchor: [0, -45]
+});
+
+// Listing marker
+const listingMarker = L.marker(
+  [
+    listingLatitude,
+    listingLongitude
+  ],
+  {
+    icon: customIcon
+  }
+)
+.addTo(map)
+.bindPopup(`
+  <div class="map-popup">
+
+    <div class="popup-icon">
+      <i class="fa-solid fa-house"></i>
+    </div>
+
+    <div class="popup-content">
+
+      <h6>
+        <%= listing.title %>
+      </h6>
+
+      <p>
+        <i class="fa-solid fa-location-dot"></i>
+        <%= listing.location %>
+      </p>
+
+      <small>
+        <%= listing.country %>
+      </small>
+
+    </div>
+
+  </div>
+`);
+
+listingMarker.openPopup();
+
+// Share listing
+async function shareListing() {
+
+  const shareData = {
+
+    title:
+      "<%= listing.title %>",
+
+    text:
+      "Check out this amazing place on WanderLust!",
+
+    url:
+      window.location.href
+
+  };
+
+  try {
+
+    if (navigator.share) {
+
+      await navigator.share(shareData);
+
+    } else {
+
+      await navigator.clipboard.writeText(
+        window.location.href
+      );
+
+      const message =
+        document.getElementById(
+          "share-message"
+        );
+
+      message.innerText =
+        "✓ Link copied!";
+
+      setTimeout(() => {
+
+        message.innerText = "";
+
+      }, 2500);
+
+    }
+
+  } catch (error) {
+
+    console.log("Share cancelled");
+
+  }
+
+}
+
+// Live location
+const locateBtn =
+  document.getElementById("locate-btn");
+
+const locationStatus =
+  document.getElementById("location-status");
+
+const footerLocation =
+  document.getElementById("footer-location");
+
+let userMarker = null;
+let accuracyCircle = null;
+
+// Get current location
+locateBtn.addEventListener(
+  "click",
+  () => {
+
+    if (!navigator.geolocation) {
+
+      locationStatus.innerText =
+        "Geolocation is not supported by your browser.";
+
+      return;
+    }
+
+    locateBtn.disabled = true;
+
+    locateBtn.innerHTML = `
+      <i class="fa-solid fa-spinner fa-spin"></i>
+      Finding Location...
+    `;
+
+    locationStatus.innerText =
+      "Requesting your current location...";
+
+    navigator.geolocation.getCurrentPosition(
+
+      (position) => {
+
+        const latitude =
+          position.coords.latitude;
+
+        const longitude =
+          position.coords.longitude;
+
+        const accuracy =
+          position.coords.accuracy;
+
+        console.log(
+          "User Latitude:",
+          latitude
+        );
+
+        console.log(
+          "User Longitude:",
+          longitude
+        );
+
+        // Move map to user
+        map.setView(
+          [
+            latitude,
+            longitude
+          ],
+          16,
+          {
+            animate: true
+          }
+        );
+
+        // Remove old user marker
+        if (userMarker) {
+
+          map.removeLayer(userMarker);
+
+        }
+
+        if (accuracyCircle) {
+
+          map.removeLayer(
+            accuracyCircle
+          );
+
+        }
+
+        // User location marker
+        userMarker =
+          L.circleMarker(
+            [
+              latitude,
+              longitude
+            ],
+            {
+              radius: 9,
+              color: "#ffffff",
+              weight: 3,
+              fillColor: "#4285F4",
+              fillOpacity: 1
+            }
+          )
+          .addTo(map);
+
+        // Accuracy circle
+        accuracyCircle =
+          L.circle(
+            [
+              latitude,
+              longitude
+            ],
+            {
+              radius: accuracy,
+              color: "#4285F4",
+              fillColor: "#4285F4",
+              fillOpacity: 0.12,
+              weight: 1
+            }
+          )
+          .addTo(map);
+
+        // User popup
+        userMarker
+          .bindPopup(`
+            <div style="text-align:center">
+
+           <strong>
+  &#128205; Your Current Location
+</strong>
+
+              <br><br>
+
+              <small>
+                Accuracy:
+                ±${Math.round(accuracy)} meters
+              </small>
+
+            </div>
+          `)
+          .openPopup();
+
+        // Status
+        locationStatus.innerText =
+          `Location found • Accuracy ±${Math.round(accuracy)}m`;
+
+        // Footer
+        footerLocation.innerText =
+          `${latitude.toFixed(5)}, ${longitude.toFixed(5)}`;
+
+        // Button
+        locateBtn.disabled = false;
+
+        locateBtn.innerHTML = `
+          <i class="fa-solid fa-location-crosshairs"></i>
+          Update My Location
+        `;
+
+      },
+
+      // Location error
+      (error) => {
+
+        console.error(
+          "Location Error:",
+          error
+        );
+
+        locateBtn.disabled = false;
+
+        locateBtn.innerHTML = `
+          <i class="fa-solid fa-location-crosshairs"></i>
+          Try Again
+        `;
+
+       if (error.code === 1) {
+
+  locationStatus.innerText =
+    "\u274C Please allow location permission.";
+
+} else if (error.code === 2) {
+
+  locationStatus.innerText =
+    "\u274C Location unavailable.";
+
+} else if (error.code === 3) {
+
+  locationStatus.innerText =
+    "\u274C Location request timed out.";
+
+} else {
+
+  locationStatus.innerText =
+    "\u274C Unable to get your location.";
+
+}
+      },
+
+      // GPS options
+      {
+        enableHighAccuracy: true,
+        timeout: 15000,
+        maximumAge: 0
+      }
+
+    );
+
+  }
+);
+
+console.log(
+  "WanderLust Map + Live Location Ready"
+);
+
+</script>

@@ -1,0 +1,167 @@
+<% layout("/layouts/boilerplate") %>
+
+<div class="row mt-4">
+  <div class="col-8 offset-2">
+
+    <h1 class="mb-4">Create a New Listing</h1>
+
+    <form
+      method="POST"
+      action="/listings"
+      enctype="multipart/form-data"
+      novalidate
+      class="needs-validation"
+    >
+
+      <!-- Title -->
+      <div class="mb-3">
+        <label class="form-label">Title</label>
+
+        <input
+          name="listing[title]"
+          placeholder="Add a catchy title"
+          type="text"
+          class="form-control"
+          required
+        >
+
+        <div class="valid-feedback">
+          Title looks good!
+        </div>
+
+        <div class="invalid-feedback">
+          Please enter a title.
+        </div>
+      </div>
+
+
+      <!-- Description -->
+      <div class="mb-3">
+
+        <label class="form-label">
+          Description
+        </label>
+
+        <textarea
+          name="listing[description]"
+          class="form-control"
+          rows="5"
+          placeholder="Describe your place..."
+          required
+        ></textarea>
+
+        <div class="invalid-feedback">
+          Please enter a short description.
+        </div>
+
+      </div>
+
+
+      <!-- Upload Image -->
+      <div class="mb-3">
+
+        <label class="form-label">
+          Upload Image
+        </label>
+
+        <input
+          type="file"
+          name="listing[image]"
+          class="form-control"
+          accept="image/png,image/jpeg,image/jpg,image/webp"
+          required
+        >
+
+        <div class="invalid-feedback">
+          Please select an image.
+        </div>
+
+      </div>
+
+
+      <!-- Price & Country -->
+      <div class="row">
+
+        <div class="mb-3 col-md-4">
+
+          <label class="form-label">
+            Price
+          </label>
+
+          <input
+            type="number"
+            name="listing[price]"
+            placeholder="1200"
+            class="form-control"
+            min="0"
+            required
+          >
+
+          <div class="invalid-feedback">
+            Please enter a valid price.
+          </div>
+
+        </div>
+
+
+        <div class="mb-3 col-md-8">
+
+          <label class="form-label">
+            Country
+          </label>
+
+          <input
+            type="text"
+            name="listing[country]"
+            placeholder="India"
+            class="form-control"
+            required
+          >
+
+          <div class="invalid-feedback">
+            Please enter country.
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- Location -->
+      <div class="mb-3">
+
+        <label class="form-label">
+          Location
+        </label>
+
+        <input
+          type="text"
+          name="listing[location]"
+          placeholder="Motihari, Bihar"
+          class="form-control"
+          required
+        >
+
+        <div class="invalid-feedback">
+          Please enter location.
+        </div>
+
+        <small class="text-muted">
+          Enter the actual city or area so the map can find the location.
+        </small>
+
+      </div>
+
+
+      <!-- Submit -->
+      <button
+        type="submit"
+        class="btn btn-dark add-btn mt-3"
+      >
+        Add Listing
+      </button>
+
+    </form>
+
+  </div>
+</div>

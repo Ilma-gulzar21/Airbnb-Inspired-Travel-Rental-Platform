@@ -1,0 +1,146 @@
+<% layout("/layouts/boilerplate") %>
+<!-- CATEGORY ICONS -->
+
+<div class="category-icons">
+
+  <div class="category-item">
+    <i class="fa-solid fa-fire"></i>
+    <span>Trending</span>
+  </div>
+
+  <div class="category-item">
+    <i class="fa-solid fa-bed"></i>
+    <span>Rooms</span>
+  </div>
+
+  <div class="category-item">
+    <i class="fa-solid fa-city"></i>
+    <span>Iconic Cities</span>
+  </div>
+
+  <div class="category-item">
+    <i class="fa-solid fa-mountain"></i>
+    <span>Mountains</span>
+  </div>
+
+  <div class="category-item">
+    <i class="fa-solid fa-chess-rook"></i>
+    <span>Castles</span>
+  </div>
+
+  <div class="category-item">
+    <i class="fa-solid fa-person-swimming"></i>
+    <span>Amazing Pools</span>
+  </div>
+
+  <div class="category-item">
+    <i class="fa-solid fa-campground"></i>
+    <span>Campings</span>
+  </div>
+
+  <div class="category-item">
+    <i class="fa-solid fa-tractor"></i>
+    <span>Farms</span>
+  </div>
+
+  <div class="category-item">
+    <i class="fa-solid fa-snowflake"></i>
+    <span>Arctic</span>
+  </div>
+
+</div>
+
+<link rel="stylesheet" href="/css/listings.css">
+
+<section class="home-listings-page">
+
+  <div class="home-listings-grid">
+
+    <% for(let listing of allListings){ %>
+
+      <article class="home-listing-item">
+
+        <a
+          href="/listings/<%= listing._id %>"
+          class="home-listing-link"
+        >
+
+          <div class="home-listing-card">
+
+            <!-- IMAGE -->
+            <div class="home-listing-image-wrapper">
+
+              <img
+                src="<%= listing.image.url %>"
+                class="home-listing-image"
+                alt="<%= listing.title %>"
+                loading="lazy"
+              >
+
+              <!-- WISHLIST -->
+             <button 
+  type="button" 
+  class="home-listing-wishlist-btn"
+  aria-label="Favorite listing"
+>
+  <i class="fa-regular fa-heart"></i>
+</button>
+            </div>
+
+
+            <!-- CARD CONTENT -->
+            <div class="home-listing-content">
+
+              <!-- TITLE + RATING -->
+              <div class="home-listing-title-row">
+
+                <h3 class="home-listing-title">
+                  <%= listing.title %>
+                </h3>
+
+                <div class="home-listing-rating">
+                  <i class="fa-solid fa-star"></i>
+                  <span>4.5</span>
+                </div>
+
+              </div>
+
+
+              <!-- LOCATION -->
+              <p class="home-listing-location">
+
+                <i class="fa-solid fa-location-dot"></i>
+
+                <span>
+                  <%= listing.location %>
+                </span>
+
+              </p>
+
+
+              <!-- PRICE -->
+              <div class="home-listing-price">
+
+                <strong>
+                  ₹<%= listing.price.toLocaleString("en-IN") %>
+                </strong>
+
+                <span>
+                  / night
+                </span>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </a>
+
+      </article>
+
+    <% } %>
+
+  </div>
+
+</section>

@@ -1,0 +1,204 @@
+<nav class="navbar navbar-expand-md navbar-wanderlust sticky-top">
+  <div class="container-fluid navbar-container">
+
+    <!-- LOGO -->
+    <a class="navbar-brand navbar-logo" href="/">
+      <i class="fa-solid fa-compass"></i>
+      <span>airbnb</span>
+    </a>
+
+    <!-- MOBILE TOGGLE -->
+    <button
+      class="navbar-toggler navbar-mobile-toggle"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNavAltMarkup"
+      aria-controls="navbarNavAltMarkup"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <i class="fa-solid fa-bars"></i>
+    </button>
+
+
+    <!-- NAV CONTENT -->
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+
+      <!-- MAIN NAV -->
+      <div class="navbar-main">
+
+        <!-- ADD LISTING -->
+        <a class="nav-link navbar-link" href="/listings/new">
+          <i class="fa-solid fa-plus"></i>
+          <span>Add</span>
+        </a>
+
+
+        <!-- SEARCH -->
+        <form
+          class="navbar-search"
+          action="/listings/search"
+          method="GET"
+        >
+
+          <i class="fa-solid fa-magnifying-glass search-icon"></i>
+
+          <input
+            type="search"
+            name="place"
+            placeholder="Search places, cities..."
+            autocomplete="off"
+          >
+
+          <button type="submit" aria-label="Search">
+            <i class="fa-solid fa-arrow-right"></i>
+          </button>
+
+        </form>
+
+      </div>
+
+
+      <!-- RIGHT SIDE -->
+      <div class="navbar-actions">
+
+
+        <!-- LANGUAGE -->
+        <div class="dropdown navbar-dropdown">
+
+          <button
+            class="navbar-action-btn"
+            type="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+            title="Language"
+          >
+            <i class="fa-solid fa-globe"></i>
+          </button>
+
+          <ul class="dropdown-menu dropdown-menu-end navbar-menu">
+
+            <li>
+              <a class="dropdown-item" href="?lang=en">
+                <i class="fa-solid fa-language"></i>
+                English
+              </a>
+            </li>
+
+            <li>
+              <a class="dropdown-item" href="?lang=hi">
+                <i class="fa-solid fa-language"></i>
+                Hindi
+              </a>
+            </li>
+
+            <li>
+              <a class="dropdown-item" href="?lang=pa">
+                <i class="fa-solid fa-language"></i>
+                Punjabi
+              </a>
+            </li>
+
+          </ul>
+
+        </div>
+
+
+        <!-- WISHLIST -->
+<a
+    href="/wishlist"
+    class="nav-icon"
+    title="Wishlist"
+    aria-label="Wishlist"
+>
+    <i class="fa-regular fa-heart"></i>
+</a>
+
+        <!-- NOTIFICATION -->
+        <a
+          href="#"
+          class="navbar-action-btn navbar-action-link"
+          title="Notifications"
+        >
+          <i class="fa-regular fa-bell"></i>
+        </a>
+
+
+        <!-- DARK MODE -->
+        <button
+          type="button"
+          class="navbar-action-btn theme-toggle"
+          id="themeToggle"
+          title="Toggle dark mode"
+          aria-label="Toggle dark mode"
+        >
+          <i class="fa-solid fa-moon"></i>
+        </button>
+
+
+        <!-- USER -->
+        <div class="dropdown navbar-dropdown">
+
+          <button
+            class="user-menu-btn"
+            type="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+            title="Account"
+          >
+            <i class="fa-solid fa-user"></i>
+            <i class="fa-solid fa-chevron-down user-chevron"></i>
+          </button>
+
+
+          <ul class="dropdown-menu dropdown-menu-end navbar-menu">
+
+            <% if (!currUser) { %>
+
+              <li>
+                <a class="dropdown-item" href="/login">
+                  <i class="fa-solid fa-right-to-bracket"></i>
+                  Login
+                </a>
+              </li>
+
+              <li>
+                <a class="dropdown-item" href="/signup">
+                  <i class="fa-solid fa-user-plus"></i>
+                  Signup
+                </a>
+              </li>
+
+            <% } else { %>
+
+              <li>
+                <a class="dropdown-item" href="/logout">
+                  <i class="fa-solid fa-right-from-bracket"></i>
+                  Logout
+                </a>
+              </li>
+
+            <% } %>
+
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li>
+              <a class="dropdown-item" href="/listings/new">
+                <i class="fa-solid fa-house-circle-plus"></i>
+                Add Listing
+              </a>
+            </li>
+
+          </ul>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+</nav>
+<script src="/js/darkMode.js"></script>

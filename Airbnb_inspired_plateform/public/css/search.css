@@ -1,0 +1,517 @@
+/* SEARCH RESULTS PAGE - AIRBNB STYLE */
+
+.search-container {
+    width: 100%;
+    max-width: 1500px;
+    margin: 0 auto;
+    padding: 38px 28px 70px;
+}
+
+/* SEARCH HEADER */
+
+.search-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 28px;
+}
+
+.search-header h2 {
+    margin: 0;
+    color: #222;
+    font-size: 26px;
+    font-weight: 600;
+    letter-spacing: -0.5px;
+}
+
+.search-header h2 span {
+    color: #555;
+}
+
+.search-header p {
+    margin: 7px 0 0;
+    color: #717171;
+    font-size: 14px;
+    font-weight: 400;
+}
+
+/* SEARCH GRID */
+
+.search-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 32px 24px;
+    width: 100%;
+}
+
+/* REMOVE ANCHOR DEFAULT STYLE */
+
+.search-card-link {
+    display: block;
+    width: 100%;
+    color: inherit !important;
+    text-decoration: none !important;
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.search-card-link:hover,
+.search-card-link:focus,
+.search-card-link:active,
+.search-card-link:visited {
+    color: inherit !important;
+    text-decoration: none !important;
+}
+
+/* CARD */
+
+.search-card {
+    width: 100%;
+    background: transparent;
+    border: none;
+    overflow: visible;
+    transition: transform 0.2s ease;
+}
+
+.search-card-link:hover .search-card {
+    transform: translateY(-3px);
+}
+
+/* IMAGE */
+
+.search-image-wrapper {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 0.94;
+    overflow: hidden;
+    border-radius: 16px;
+    background: #eeeeee;
+}
+
+.search-card-image {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    transition: transform 0.35s ease;
+}
+
+.search-card-link:hover .search-card-image {
+    transform: scale(1.035);
+}
+
+/* IMAGE FALLBACK */
+
+.search-no-image {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #eeeeee;
+    color: #999;
+    font-size: 32px;
+}
+
+/* HEART BUTTON */
+
+.search-heart {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.92);
+    color: #222;
+    font-size: 17px;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+    transition:
+        transform 0.2s ease,
+        background 0.2s ease,
+        color 0.2s ease;
+}
+
+.search-heart:hover {
+    background: #fff;
+    color: #ff385c;
+    transform: scale(1.08);
+}
+
+/* CARD CONTENT */
+
+.search-card-content {
+    padding: 12px 2px 0;
+}
+
+/* TITLE */
+
+.search-card-title {
+    margin: 0;
+    color: #222;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.35;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* LOCATION */
+
+.search-card-location {
+    margin: 5px 0 0;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #717171;
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+.search-card-location i {
+    flex-shrink: 0;
+    color: #717171;
+    font-size: 12px;
+}
+
+.search-card-location span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* CARD BOTTOM */
+
+.search-card-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 9px;
+}
+
+/* PRICE */
+
+.search-price {
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+    color: #222;
+    white-space: nowrap;
+}
+
+.search-price strong {
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.search-price span {
+    color: #717171;
+    font-size: 13px;
+}
+
+/* VIEW */
+
+.search-view {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    color: #ff385c;
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+    opacity: 0;
+    transform: translateX(-4px);
+    transition:
+        opacity 0.2s ease,
+        transform 0.2s ease;
+}
+
+.search-card-link:hover .search-view {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.search-view i {
+    font-size: 10px;
+}
+
+/* NO RESULTS */
+
+.no-results {
+    width: 100%;
+    min-height: 360px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 40px 20px;
+}
+
+.no-results-icon {
+    width: 64px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 18px;
+    border-radius: 50%;
+    background: #fff0f2;
+    color: #ff385c;
+    font-size: 25px;
+}
+
+.no-results h3 {
+    margin: 0 0 8px;
+    color: #222;
+    font-size: 22px;
+    font-weight: 600;
+}
+
+.no-results p {
+    margin: 0 0 5px;
+    color: #555;
+    font-size: 14px;
+}
+
+.no-results span {
+    color: #888;
+    font-size: 13px;
+}
+
+/* TABLET */
+
+@media (max-width: 1200px) {
+    .search-container {
+        padding-left: 24px;
+        padding-right: 24px;
+    }
+
+    .search-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 28px 20px;
+    }
+}
+
+/* SMALL TABLET */
+
+@media (max-width: 900px) {
+    .search-container {
+        padding: 30px 20px 60px;
+    }
+
+    .search-header h2 {
+        font-size: 23px;
+    }
+
+    .search-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 28px 18px;
+    }
+}
+
+/* MOBILE */
+
+@media (max-width: 600px) {
+    .search-container {
+        padding: 24px 16px 50px;
+    }
+
+    .search-header {
+        margin-bottom: 22px;
+    }
+
+    .search-header h2 {
+        font-size: 20px;
+        line-height: 1.35;
+    }
+
+    .search-header p {
+        font-size: 13px;
+    }
+
+    .search-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 26px 12px;
+    }
+
+    .search-image-wrapper {
+        aspect-ratio: 1 / 1.02;
+        border-radius: 13px;
+    }
+
+    .search-heart {
+        top: 9px;
+        right: 9px;
+        width: 32px;
+        height: 32px;
+        font-size: 15px;
+    }
+
+    .search-card-content {
+        padding-top: 9px;
+    }
+
+    .search-card-title {
+        font-size: 14px;
+    }
+
+    .search-card-location {
+        margin-top: 4px;
+        font-size: 11px;
+    }
+
+    .search-card-location i {
+        font-size: 10px;
+    }
+
+    .search-card-bottom {
+        margin-top: 7px;
+    }
+
+    .search-price strong {
+        font-size: 13px;
+    }
+
+    .search-price span {
+        font-size: 11px;
+    }
+
+    .search-view {
+        display: none;
+    }
+}
+
+/* VERY SMALL MOBILE */
+
+@media (max-width: 380px) {
+    .search-container {
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+
+    .search-grid {
+        gap: 24px 10px;
+    }
+
+    .search-card-title {
+        font-size: 13px;
+    }
+
+    .search-card-location {
+        font-size: 10px;
+    }
+
+    .search-price strong {
+        font-size: 12px;
+    }
+
+    .search-price span {
+        font-size: 10px;
+    }
+}
+
+/* DARK MODE - SEARCH PAGE */
+
+body.dark-mode .search-header h2 {
+    color: #f5f5f5;
+}
+
+body.dark-mode .search-header h2 span {
+    color: #bdbdbd;
+}
+
+body.dark-mode .search-header p {
+    color: #aaa;
+}
+
+/* DARK MODE - CARD */
+
+body.dark-mode .search-card-title {
+    color: #f5f5f5;
+}
+
+body.dark-mode .search-card-location {
+    color: #aaa;
+}
+
+body.dark-mode .search-card-location i {
+    color: #aaa;
+}
+
+body.dark-mode .search-price {
+    color: #f5f5f5;
+}
+
+body.dark-mode .search-price span {
+    color: #aaa;
+}
+
+/* DARK MODE - IMAGE FALLBACK */
+
+body.dark-mode .search-image-wrapper {
+    background: #242424;
+}
+
+body.dark-mode .search-no-image {
+    background: #242424;
+    color: #777;
+}
+
+/* DARK MODE - HEART */
+
+body.dark-mode .search-heart {
+    background: rgba(30, 30, 30, 0.92);
+    color: #f5f5f5;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+body.dark-mode .search-heart:hover {
+    background: #2b2b2b;
+    color: #ff385c;
+}
+
+/* DARK MODE - NO RESULTS */
+
+body.dark-mode .no-results h3 {
+    color: #f5f5f5;
+}
+
+body.dark-mode .no-results p {
+    color: #bbb;
+}
+
+body.dark-mode .no-results span {
+    color: #888;
+}
+
+body.dark-mode .no-results-icon {
+    background: #2b2022;
+    color: #ff5c75;
+}
+
+/* ACCESSIBILITY / FOCUS */
+
+.search-card-link:focus-visible {
+    outline: 2px solid #ff385c;
+    outline-offset: 4px;
+    border-radius: 12px;
+}
+
+/* REDUCE MOTION */
+
+@media (prefers-reduced-motion: reduce) {
+    .search-card,
+    .search-card-image,
+    .search-heart,
+    .search-view {
+        transition: none;
+    }
+}

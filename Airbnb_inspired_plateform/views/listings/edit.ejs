@@ -1,0 +1,366 @@
+<% layout("/layouts/boilerplate") %>
+
+<link rel="stylesheet" href="/css/edit.css">
+
+<section class="wl-edit-page">
+
+    <div class="wl-edit-container">
+
+        <!-- HEADER -->
+        <div class="wl-edit-header">
+
+            <a href="/listings/<%= listing._id %>" class="wl-back-link">
+                <i class="fa-solid fa-arrow-left"></i>
+                Back to listing
+            </a>
+
+            <h1>Edit your listing</h1>
+
+            <p>
+                Make changes to your property details and keep your listing up to date.
+            </p>
+
+        </div>
+
+
+        <!-- FORM CARD -->
+        <div class="wl-edit-card">
+
+            <form
+                method="POST"
+                action="/listings/<%= listing._id %>?_method=PUT"
+                enctype="multipart/form-data"
+                novalidate
+                class="needs-validation"
+            >
+
+                <!-- BASIC INFORMATION -->
+                <div class="wl-form-section">
+
+                    <div class="wl-section-heading">
+                        <span class="wl-section-icon">
+                            <i class="fa-solid fa-house"></i>
+                        </span>
+
+                        <div>
+                            <h2>Property details</h2>
+                            <p>Tell guests about your property.</p>
+                        </div>
+                    </div>
+
+
+                    <!-- TITLE -->
+                    <div class="wl-form-group">
+
+                        <label for="listing-title">
+                            Title
+                        </label>
+
+                        <input
+                            id="listing-title"
+                            name="listing[title]"
+                            value="<%= listing.title %>"
+                            type="text"
+                            class="wl-input"
+                            placeholder="e.g. Cozy apartment near city centre"
+                            required
+                        >
+
+                        <div class="invalid-feedback">
+                            Please enter a title.
+                        </div>
+
+                    </div>
+
+
+                    <!-- DESCRIPTION -->
+                    <div class="wl-form-group">
+
+                        <label for="listing-description">
+                            Description
+                        </label>
+
+                        <textarea
+                            id="listing-description"
+                            name="listing[description]"
+                            class="wl-input wl-textarea"
+                            rows="6"
+                            placeholder="Describe your property..."
+                            required
+                        ><%= listing.description %></textarea>
+
+                        <div class="invalid-feedback">
+                            Please enter a description.
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- IMAGE SECTION -->
+                <div class="wl-form-section">
+
+                    <div class="wl-section-heading">
+
+                        <span class="wl-section-icon">
+                            <i class="fa-regular fa-image"></i>
+                        </span>
+
+                        <div>
+                            <h2>Property photo</h2>
+                            <p>Keep your current photo or upload a new one.</p>
+                        </div>
+
+                    </div>
+
+
+                    <!-- CURRENT IMAGE -->
+                    <div class="wl-current-image-box">
+
+                        <div class="wl-image-preview">
+
+                            <% if (listing.image && listing.image.url) { %>
+
+                                <img
+                                    src="<%= listing.image.url %>"
+                                    alt="<%= listing.title %>"
+                                >
+
+                            <% } else { %>
+
+                                <div class="wl-no-image">
+                                    <i class="fa-regular fa-image"></i>
+                                    <span>No image available</span>
+                                </div>
+
+                            <% } %>
+
+                        </div>
+
+
+                        <div class="wl-image-info">
+
+                            <span class="wl-image-label">
+                                Current photo
+                            </span>
+
+                            <p>
+                                This is the image currently displayed on your listing.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- UPLOAD -->
+                    <div class="wl-upload-box">
+
+                        <label
+                            for="listing-image"
+                            class="wl-upload-label"
+                        >
+
+                            <span class="wl-upload-icon">
+                                <i class="fa-solid fa-cloud-arrow-up"></i>
+                            </span>
+
+                            <span class="wl-upload-title">
+                                Upload a new photo
+                            </span>
+
+                            <span class="wl-upload-text">
+                                PNG, JPG, JPEG or WEBP
+                            </span>
+
+                        </label>
+
+                        <input
+                            id="listing-image"
+                            type="file"
+                            name="listing[image]"
+                            accept="image/png,image/jpeg,image/jpg,image/webp"
+                        >
+
+                    </div>
+
+                    <p class="wl-help-text">
+                        Leave this empty if you want to keep your current photo.
+                    </p>
+
+                </div>
+
+
+                <!-- PRICE & LOCATION -->
+                <div class="wl-form-section">
+
+                    <div class="wl-section-heading">
+
+                        <span class="wl-section-icon">
+                            <i class="fa-solid fa-location-dot"></i>
+                        </span>
+
+                        <div>
+                            <h2>Location & pricing</h2>
+                            <p>Update where your property is located and its price.</p>
+                        </div>
+
+                    </div>
+
+
+                    <!-- PRICE + COUNTRY -->
+                    <div class="wl-form-row">
+
+                        <!-- PRICE -->
+                        <div class="wl-form-group">
+
+                            <label for="listing-price">
+                                Price
+                            </label>
+
+                            <div class="wl-input-prefix">
+
+                                <span>₹</span>
+
+                                <input
+                                    id="listing-price"
+                                    name="listing[price]"
+                                    value="<%= listing.price %>"
+                                    type="number"
+                                    min="0"
+                                    class="wl-input"
+                                    placeholder="0"
+                                    required
+                                >
+
+                            </div>
+
+                            <div class="invalid-feedback">
+                                Please enter a valid price.
+                            </div>
+
+                        </div>
+
+
+                        <!-- COUNTRY -->
+                        <div class="wl-form-group">
+
+                            <label for="listing-country">
+                                Country
+                            </label>
+
+                            <input
+                                id="listing-country"
+                                name="listing[country]"
+                                value="<%= listing.country %>"
+                                type="text"
+                                class="wl-input"
+                                placeholder="India"
+                                required
+                            >
+
+                            <div class="invalid-feedback">
+                                Please enter country.
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- LOCATION -->
+                    <div class="wl-form-group">
+
+                        <label for="listing-location">
+                            Location
+                        </label>
+
+                        <div class="wl-location-input">
+
+                            <i class="fa-solid fa-location-dot"></i>
+
+                            <input
+                                id="listing-location"
+                                name="listing[location]"
+                                value="<%= listing.location %>"
+                                type="text"
+                                class="wl-input"
+                                placeholder="City, neighbourhood or area"
+                                required
+                            >
+
+                        </div>
+
+                        <div class="invalid-feedback">
+                            Please enter location.
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- FORM ACTIONS -->
+                <div class="wl-form-actions">
+
+                    <a
+                        href="/listings/<%= listing._id %>"
+                        class="wl-cancel-btn"
+                    >
+                        Cancel
+                    </a>
+
+                    <button
+                        type="submit"
+                        class="wl-update-btn"
+                    >
+                        <i class="fa-solid fa-check"></i>
+                        Save changes
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- BOOTSTRAP VALIDATION -->
+<script>
+
+(function () {
+
+    "use strict";
+
+    const forms =
+        document.querySelectorAll(".needs-validation");
+
+    Array.from(forms).forEach(function (form) {
+
+        form.addEventListener(
+            "submit",
+            function (event) {
+
+                if (!form.checkValidity()) {
+
+                    event.preventDefault();
+                    event.stopPropagation();
+
+                }
+
+                form.classList.add("was-validated");
+
+            },
+            false
+        );
+
+    });
+
+})();
+
+</script>

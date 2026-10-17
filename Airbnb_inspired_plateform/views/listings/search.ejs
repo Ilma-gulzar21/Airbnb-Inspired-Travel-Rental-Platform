@@ -1,0 +1,157 @@
+<% layout("/layouts/boilerplate") %>
+<link rel="stylesheet" href="/css/search.css">
+<div class="search-container">
+ 
+<!-- SEARCH HEADER -->
+
+    <div class="search-header">
+
+        <div>
+            <h2>
+                Search results for
+                <span>"<%= place %>"</span>
+            </h2>
+
+            <p>
+                <%= listings.length %>
+                <%= listings.length === 1 ? "stay" : "stays" %> found
+            </p>
+        </div>
+
+    </div>
+
+
+    <!-- NO RESULTS-->
+
+    <% if (listings.length === 0) { %>
+
+        <div class="no-results">
+
+            <div class="no-results-icon">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </div>
+
+            <h3>
+                No stays found
+            </h3>
+
+            <p>
+                We couldn't find any properties matching
+                "<%= place %>".
+            </p>
+
+            <span>
+                Try searching for another location.
+            </span>
+
+        </div>
+
+
+    <% } else { %>
+
+
+        <!-- LISTINGS GRID-->
+
+        <div class="search-grid">
+
+            <% listings.forEach(listing => { %>
+
+                <a
+                    href="/listings/<%= listing._id %>"
+                    class="search-card-link"
+                >
+
+                    <article class="search-card">
+
+                        <!-- IMAGE-->
+
+                        <div class="search-image-wrapper">
+
+                            <% if (listing.image && listing.image.url) { %>
+
+                                <img
+                                    src="<%= listing.image.url %>"
+                                    alt="<%= listing.title %>"
+                                    class="search-card-image"
+                                >
+
+                            <% } else { %>
+
+                                <div class="search-no-image">
+                                    <i class="fa-regular fa-image"></i>
+                                </div>
+
+                            <% } %>
+
+
+                            <!-- HEART -->
+
+                            <button
+                                type="button"
+                                class="search-heart"
+                                aria-label="Add to wishlist"
+                                onclick="event.preventDefault(); event.stopPropagation();"
+                            >
+                                <i class="fa-regular fa-heart"></i>
+                            </button>
+
+                        </div>
+
+
+                        <!-- CARD CONTENT-->
+
+                        <div class="search-card-content">
+
+                            <h3 class="search-card-title">
+                                <%= listing.title %>
+                            </h3>
+
+
+                            <p class="search-card-location">
+
+                                <i class="fa-solid fa-location-dot"></i>
+
+                                <span>
+                                    <%= listing.location %>
+                                    <% if (listing.country) { %>
+                                        , <%= listing.country %>
+                                    <% } %>
+                                </span>
+
+                            </p>
+
+
+                            <div class="search-card-bottom">
+
+                                <div class="search-price">
+
+                                    <strong>
+                                        ₹<%= listing.price.toLocaleString("en-IN") %>
+                                    </strong>
+
+                                    <span>
+                                        night
+                                    </span>
+
+                                </div>
+
+                                <span class="search-view">
+                                    View
+                                    <i class="fa-solid fa-arrow-right"></i>
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </article>
+
+                </a>
+
+            <% }) %>
+
+        </div>
+
+    <% } %>
+
+</div>
